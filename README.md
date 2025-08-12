@@ -3,54 +3,50 @@ Système de commande numérique via Bluetooth
 =======
 
 A new Flutter project.
-Main.dart :
-1.1. Structure générale et initialisation
 
-Le code commence par l'initialisation de Firebase dans la fonction main():
-""" Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(
-    MaterialApp(
-      home: MyApp(),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/admin': (context) => AdminLoginPage(),
-        '/admin-dashboard': (context) => AdminDashboard(),
-      },
-    ),
-  );
-} """
-Cette section configure l'application Flutter et initialise Firebase, ce qui est essentiel pour la communication avec Firestore. Les routes définies (/admin, /admin-dashboard) suggèrent une interface d'administration pour la gestion du restaurant.
+Architecture Technique pour un Système de Commande Numérique basé sur Bluetooth
+1. Composants principaux du système
+Appareils des clients : Smartphones ou tablettes équipés de Bluetooth (BLE) pour accéder au menu et passer des commandes.
+Serveur Bluetooth (Point central) :
+Une station de réception ou un serveur local équipé d’un module Bluetooth.
+Ce serveur reçoit les commandes et les envoie au système de gestion des commandes ou à la cuisine.
+Balises Bluetooth (Beacons) (optionnel) :
+Déployées dans différentes sections du restaurant pour élargir la portée du système.
+Application mobile ou interface web :
+Une application ou une interface PWA (Progressive Web App) accessible après le scan d’un QR Code. (In Memory DB like SQLite, Or use Firebase)
+Système backend :
+Gestion des commandes, stockage des informations et transmission vers la cuisine.
+Peut être hébergé localement sur le serveur Bluetooth ou dans un serveur connecté au réseau local.
 
-1.2. Modèles de données
+2. Processus de fonctionnement
+Connexion et découverte via QR Code :
+Le QR Code affiché sur la table contient :
+Un lien pour télécharger l'application ou ouvrir une interface web.
+Les instructions pour jumeler l'appareil via Bluetooth avec le serveur central.
+Exploration du menu :
+Une fois connecté au serveur Bluetooth, le client accède au menu du restaurant (sous forme de texte ou d’images légères).
+Passage de la commande :
+Les clients sélectionnent les plats souhaités dans l’interface.
+La commande est envoyée via Bluetooth au serveur central, qui l’enregistre.
+Gestion des commandes côté serveur :
+Le serveur traite la commande et la transmet à la cuisine ou à l’interface des serveurs.
+Une confirmation de commande est envoyée au client.
+Notifications :
+Le serveur peut envoyer des notifications au client via Bluetooth, comme l'état de préparation ou des offres spéciales.
 
-Le fichier définit plusieurs classes de modèles de données qui représentent les entités de l'application:
-• MenuType (Enumération): Définit les catégories de menu (plats, boissons, desserts).
-• OrderStatus (Enumération): Définit les différents statuts possibles pour une commande (en attente, en préparation, prête, livrée, annulée).
-• MenuItem (Classe): Représente un élément individuel du menu avec des propriétés comme id, image, nom, description, et prix. Il inclut des méthodes fromFirestore et toFirestore pour la sérialisation et désérialisation des données depuis/vers Firestore.
-• CartItem (Classe): Représente un article dans le panier d'achat, incluant un MenuItem, sa category et la quantity.
-• Order (Classe): Représente une commande client, incluant un id, un tableNumber (remplaçant clientId), une liste de CartItem, le totalAmount, le status, et les timestamps createdAt et updatedAt. Similaire à MenuItem, elle possède des méthodes fromFirestore et toFirestore.
-Ces modèles sont cruciaux pour structurer les données échangées avec Firestore et sont répliqués, dans une certaine mesure, dans le fichier Python pour assurer la compatibilité des données.
+3. Étapes d’implémentation
+Étape 1 : Choix des technologies
+Serveur Bluetooth : Utilisez des modules Bluetooth comme Raspberry Pi avec des bibliothèques Python (ex. : PyBluez, Bleak).
+Application/Interface : Une application Android/iOS ou une PWA développée avec Flutter ou React.
+Backend : Python (Flask/Django) ou Node.js pour le traitement des commandes.
+Base de données : Firebase, SQLite ou PostgreSQL pour stocker les commandes et les informations du menu.
+Étape 2 : Configuration du Bluetooth
+Configurez un serveur BLE qui accepte les connexions des appareils des clients.
+Implémentez le protocole GATT pour permettre l’échange de données.
+Étape 3 : Développement de l’application
+Inclure une interface utilisateur pour afficher les menus, ajouter des commandes et visualiser les statuts.
+Intégrer une fonction de jumelage Bluetooth via l’application
 
-1.3. Service Firebase (MenuService)
-
-La classe MenuService est le cœur de l'interaction avec Firestore. Elle encapsule la logique pour:
-• Récupérer les listes de plats, boissons et desserts (getPlats, getBoissons, getDesserts, getMenuItemsByType). Ces méthodes retournent des Streams, permettant une mise à jour en temps réel de l'interface utilisateur lorsque les données changent dans Firestore.
-• Créer de nouvelles commandes (createOrder).
-• Récupérer toutes les commandes (getAllOrders) ou les commandes spécifiques à une table (getOrdersByTable).
-• Mettre à jour le statut d'une commande (updateOrderStatus).
-• Supprimer des commandes (deleteOrder, deleteAllOrders).
-Ce service est essentiel pour la gestion backend des données de l'application.
-
-1.4. Interface utilisateur (Pages et Widgets)
-
-Le fichier contient également des composants d'interface utilisateur:
-• ClientOrdersPage: Une page dédiée à l'affichage des commandes pour une table spécifique. Elle utilise un StreamBuilder pour écouter les changements de commandes depuis Firestore et met à jour l'UI en conséquence. Elle affiche les détails de la commande et son statut.
-• AdminLoginPage: Une page de connexion pour les administrateurs, utilisant Firebase Authentication pour l'authentification par email et mot de passe.
-• AdminDashboard: Le tableau de bord de l'administrateur (le code complet n'est pas fourni dans l'extrait, mais sa présence est indiquée par la route et l'utilisation de AdminDashboard).
-
-En résumé, main.dart est une application Flutter complète pour la gestion des commandes et des menus d'un restaurant via Firebase. Il est conçu pour être le client qui consomme des données.
 
 
 TODO - Système de Commande Restaurant Bluetooth BLE
