@@ -5,6 +5,8 @@ Système de commande numérique via Bluetooth
 A new Flutter project.
 
 Architecture Technique pour un Système de Commande Numérique basé sur Bluetooth
+===============================================================================
+
 1. Composants principaux du système
 Appareils des clients : Smartphones ou tablettes équipés de Bluetooth (BLE) pour accéder au menu et passer des commandes.
 Serveur Bluetooth (Point central) :
