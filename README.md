@@ -53,13 +53,50 @@ Le fichier contient également des composants d'interface utilisateur:
 En résumé, main.dart est une application Flutter complète pour la gestion des commandes et des menus d'un restaurant via Firebase. Il est conçu pour être le client qui consomme des données.
 
 
+TODO - Système de Commande Restaurant Bluetooth BLE
 
-## Getting Started
+## Phase 1: Configuration du serveur Bluetooth BLE sur Raspberry Pi
+- [ ] Créer la structure du projet
+- [ ] Implémenter le serveur BLE avec protocole GATT
+- [ ] Configurer les services et caractéristiques Bluetooth
+- [ ] Ajouter la gestion des connexions multiples (minimum 2 appareils)
+- [ ] Implémenter les logs de debugging
+- [ ] Tester la connectivité BLE
 
-This project is a starting point for a Flutter application.
+## Phase 2: Configuration de Firebase pour la base de données
+- [ ] Configurer Firebase pour les commandes
+- [ ] Créer les modèles de données (menu, commandes)
+- [ ] Implémenter les fonctions CRUD
+- [ ] Tester la connexion Firebase
 
-A few resources to get you started if this is your first Flutter project:
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Phase 3: Développement de l'interface client Flutter
+- [ ] Créer l'application Flutter client
+- [ ] Implémenter la connexion Bluetooth
+- [ ] Développer l'interface menu
+- [ ] Créer le système de panier
+- [ ] Implémenter la validation de commande
+- [ ] Ajouter le suivi de statut
 
-(Premiere sauvegarde sur Git)
+## Phase 4: Développement de l'interface admin Flutter
+- [ ] Créer l'application Flutter admin
+- [ ] Implémenter l'authentification
+- [ ] Développer l'interface de gestion des commandes
+- [ ] Créer la mise à jour des statuts
+- [ ] Tester l'interface admin
+
+## Phase 5: Tests et intégration du système complet
+- [ ] Tester la communication BLE complète
+- [ ] Vérifier l'intégration Firebase
+- [ ] Tester les notifications
+- [ ] Tests de charge avec plusieurs clients
+
+## Phase 6: Documentation et livraison du projet
+- [ ] Créer la documentation technique
+- [ ] Rédiger le guide d'installation
+- [ ] Préparer les instructions de déploiement
+- [ ] Livrer le projet complet
+
+<img width="2138" height="252" alt="deepseek_mermaid_20250808_e6baf3" src="https://github.com/user-attachments/assets/a758e814-1d3e-49b1-b821-1d7d6ddd053e" />
+
+
+(Premier Projet sur Git)
